@@ -1,9 +1,9 @@
 includeConfigs:
   - ${DRP_PIPE_DIR}/bps/resources/LSSTCam/DRP.yaml
 
-LSST_VERSION: w_2025_43
+LSST_VERSION: ${WEEKLY}
 
-pipelineYaml: "${PWD}/LSSTCam_coadd_pipeline.yaml#coadd_pipeline_steps"
+pipelineYaml: "${PWD}/LSSTCamSim_coadd_pipeline.yaml#coadd_pipeline_steps"
 
 payload:
   payloadName: coadd_pipeline_test_{LSST_VERSION}
@@ -18,7 +18,7 @@ extraQgraphOptions: "--dataset-query-constraint raw"
 extraRunQuantumOptions: "--no-raise-on-partial-outputs"
 
 wmsServiceClass: lsst.ctrl.bps.parsl.ParslService
-computeSite: work_queue
+computeSite: task_vine
 
 parsl:
   log_level: WARN
@@ -30,7 +30,7 @@ site:
     monitorEnable: true
     monitorFilename: runinfo/monitoring.db
   work_queue:
-    class: bps_parsl_sites.SlurmWorkQueue
+    class: bps_parsl_sites.SlurmTaskVine
     nodes_per_block: 5
     walltime: "2:00:00"
     exclusive: true
