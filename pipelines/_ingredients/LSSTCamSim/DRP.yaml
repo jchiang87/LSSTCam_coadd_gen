@@ -20,6 +20,8 @@ tasks:
     class: lsst.ip.isr.IsrTaskLSST
     config:
       ampOffset.doApplyAmpOffset: true
+      doCrosstalk: false
+      doBrighterFatter: false
   updateVisitSummary:
     class: lsst.drp.tasks.update_visit_summary.UpdateVisitSummaryTask
     config:

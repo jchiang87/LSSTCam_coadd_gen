@@ -8,14 +8,14 @@ tasks:
   calibrateImage:
     class: lsst.pipe.tasks.calibrateImage.CalibrateImageTask
     config:
-      connections.astrometry_ref_cat: "euclid_stars_20251027"
-      connections.photometry_ref_cat: "euclid_stars_20251027"
+      connections.astrometry_ref_cat: "uw_stars_20260622"
+      connections.photometry_ref_cat: "uw_stars_20260622"
       python: |
         config.photometry.applyColorTerms = False
         config.photometry.match.referenceSelection.magLimit.fluxField = "lsst_i_flux"
-        config.astrometry_ref_loader.filterMap = {band: 'lsst_%s' % (band) for band in 'gri'}
+        config.astrometry_ref_loader.filterMap = {band: 'lsst_%s' % (band) for band in 'ugrizy'}
         config.astrometry_ref_loader.anyFilterMapsToThis = None
-        config.photometry_ref_loader.filterMap = {band: 'lsst_%s' % (band) for band in 'gri'}
+        config.photometry_ref_loader.filterMap = {band: 'lsst_%s' % (band) for band in 'ugrizy'}
   consolidateVisitSummary:
     class: lsst.pipe.tasks.postprocess.ConsolidateVisitSummaryTask
     config:
@@ -33,7 +33,7 @@ tasks:
     config:
       doPropagateFlags: false
 subsets:
-  coadd_pipeline_steps:
+  lsstcamsim-pipeline:
     subset:
       - isr
       - calibrateImage
@@ -50,5 +50,7 @@ subsets:
       - measureObjectUnforced
       - mergeObjectMeasurement
       - measureObjectForced
+      - metadetectionShear
+      - consolidateShearObject
     description: |
       Subset of DRP tasks to produce coadds and do initial object measurements.
